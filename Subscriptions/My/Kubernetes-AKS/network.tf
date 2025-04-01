@@ -27,7 +27,15 @@ resource "azurerm_subnet" "container" {
   name                 = "${azurerm_virtual_network.vnet.name}-containers"
   resource_group_name  =  azurerm_virtual_network.vnet.resource_group_name
   virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefixes     = [cidrsubnet(local.address_space[0], 10, 1)]
+  address_prefixes     = [cidrsubnet(local.address_space[0], 16, 10)]
+  delegation {
+    name = "delegation"
+
+    service_delegation {
+      name    = "Microsoft.ServiceNetworking/trafficControllers"
+      actions = ["Microsoft.Network/virtualNetworks/subnets/join/action"]
+    }
+  }
   
   service_endpoints = [ 
     "Microsoft.Storage"

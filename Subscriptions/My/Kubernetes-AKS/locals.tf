@@ -57,5 +57,8 @@ locals {
   
 
   cert_name_example = "ExampleCert"
+
+
+  app_gateway_container_name = "${local.ClientName}-app-gateway-container"
 }
 

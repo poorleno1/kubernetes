@@ -1,5 +1,5 @@
 variable "location" {
-  default = "swedencentral"
+  default = "germanywestcentral"
 }
 
 variable "Environment" {
