@@ -18,5 +18,8 @@ locals {
   aks_service_cidr = "10.2.0.0/24"
   aks_dns_service_ip = "10.2.0.10"
   ssh_public_key = file("${path.module}/.ssh/id_rsa.pub")
+
+
+  acr_name = "acr${replace(local.ClientName,"-","")}"
 }
 

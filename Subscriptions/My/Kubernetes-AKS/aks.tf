@@ -11,6 +11,11 @@ resource "azurerm_kubernetes_cluster" "aks" {
     vm_size        = "Standard_DS2_v2"
     vnet_subnet_id = azurerm_subnet.subnet1.id
     type           = "VirtualMachineScaleSets"
+    upgrade_settings {
+      drain_timeout_in_minutes = 0
+      max_surge = "10%"
+      node_soak_duration_in_minutes = 0
+    }
   }
 
   identity {
@@ -39,5 +44,14 @@ resource "azurerm_kubernetes_cluster" "aks" {
     }
   }
 
+  
   depends_on = [ azurerm_subnet.subnet1 ]
+}
+
+
+resource "azurerm_role_assignment" "acr_pull" {
+  principal_id                     = azurerm_user_assigned_identity.ca.client_id
+  role_definition_name             = "AcrPull"
+  scope                            = azurerm_container_registry.acr.id
+  skip_service_principal_aad_check = true
 }
