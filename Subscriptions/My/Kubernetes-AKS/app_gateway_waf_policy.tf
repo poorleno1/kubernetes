@@ -1,7 +1,7 @@
 resource "azurerm_web_application_firewall_policy" "waf_policy_sentry" {
   name                = local.app_gateway_policy_sentry
-  resource_group_name = azurerm_resource_group.resource_group.location
-  location            = var.location
+  resource_group_name = azurerm_resource_group.resource_group.name
+  location            = azurerm_resource_group.resource_group.location
 
   #   custom_rules {
   #     name      = "OnlyUSandCanada"
@@ -116,8 +116,8 @@ resource "azurerm_web_application_firewall_policy" "waf_policy_sentry" {
 
 resource "azurerm_web_application_firewall_policy" "waf_policy_msr" {
   name                = local.app_gateway_policy_msr
-  resource_group_name = azurerm_resource_group.resource_group.location
-  location            = var.location
+  resource_group_name = azurerm_resource_group.resource_group.name
+  location            = azurerm_resource_group.resource_group.location
 
   #   custom_rules {
   #     name      = "OnlyUSandCanada"

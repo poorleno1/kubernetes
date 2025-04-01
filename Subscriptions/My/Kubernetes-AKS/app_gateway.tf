@@ -18,8 +18,8 @@ resource "azurerm_user_assigned_identity" "app_gateway" {
 
 resource "azurerm_application_gateway" "app_gateway" {
   name                = local.app_gateway_name
-  resource_group_name = azurerm_resource_group.resource_group.location
-  location            = var.location
+  resource_group_name = azurerm_resource_group.resource_group.name
+  location            = azurerm_resource_group.resource_group.location
 
   firewall_policy_id = azurerm_web_application_firewall_policy.waf_policy_msr.id
 
@@ -55,10 +55,10 @@ resource "azurerm_application_gateway" "app_gateway" {
     port = 80
   }
 
-  frontend_port {
-    name = local.frontend_port_https
-    port = 443
-  }
+  # frontend_port {
+  #   name = local.frontend_port_https
+  #   port = 443
+  # }
 
   frontend_ip_configuration {
     name                 = local.frontend_ip_configuration_name
@@ -150,14 +150,14 @@ resource "azurerm_application_gateway" "app_gateway" {
     host_name                      = "${local.web_app_name_gw_example}.${local.domain_public}"
   }
 
-  http_listener {
-    name                           = local.listener_name_https_example
-    frontend_ip_configuration_name = local.frontend_ip_configuration_name
-    frontend_port_name             = local.frontend_port_https
-    protocol                       = "Https"
-    ssl_certificate_name           = local.cert_name_example
-    host_name                      = "${local.web_app_name_gw_example}.${local.domain_public}"
-  }
+  # http_listener {
+  #   name                           = local.listener_name_https_example
+  #   frontend_ip_configuration_name = local.frontend_ip_configuration_name
+  #   frontend_port_name             = local.frontend_port_https
+  #   protocol                       = "Https"
+  #   ssl_certificate_name           = local.cert_name_example
+  #   host_name                      = "${local.web_app_name_gw_example}.${local.domain_public}"
+  # }
 
   backend_address_pool {
     name = local.backend_address_pool_example
@@ -166,17 +166,17 @@ resource "azurerm_application_gateway" "app_gateway" {
   }
     
 
-  redirect_configuration {
-    name                 = local.redirect_configuration_example
-    redirect_type        = "Permanent"
-    target_listener_name = local.listener_name_https_example
-  }
+  # redirect_configuration {
+  #   name                 = local.redirect_configuration_example
+  #   redirect_type        = "Permanent"
+  #   target_listener_name = local.listener_name_https_example
+  # }
 
-    request_routing_rule {
+  request_routing_rule {
     name                       = local.request_routing_rule_example
     priority                   = 9
     rule_type                  = "Basic"
-    http_listener_name         = local.listener_name_https_example
+    http_listener_name         = local.listener_name_http_example
     backend_address_pool_name  = local.backend_address_pool_example
     backend_http_settings_name = local.http_setting_name
     #rewrite_rule_set_name = local.rewrite_rule_set_name
