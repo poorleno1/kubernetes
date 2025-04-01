@@ -27,7 +27,7 @@ resource "azurerm_subnet" "container" {
   name                 = "${azurerm_virtual_network.vnet.name}-containers"
   resource_group_name  =  azurerm_virtual_network.vnet.resource_group_name
   virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefixes     = [cidrsubnet(local.address_space[0], 7, 1)]
+  address_prefixes     = [cidrsubnet(local.address_space[0], 10, 1)]
   
   service_endpoints = [ 
     "Microsoft.Storage"
