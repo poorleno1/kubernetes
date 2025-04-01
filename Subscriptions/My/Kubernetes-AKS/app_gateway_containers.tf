@@ -37,6 +37,33 @@ resource "azapi_resource" "symbolicname" {
   }
 }
 
+resource "azapi_resource" "frontend" {
+  type = "Microsoft.ServiceNetworking/trafficControllers/frontends@2025-01-01"
+  name = "frontend"
+  parent_id = azapi_resource.trafficController.id
+  location = azurerm_resource_group.resource_group.location
+  
+  body = {
+    properties = {
+    }
+  }
+}
+
+# resource "azapi_resource" "securityPolicy" {
+#   type = "Microsoft.ServiceNetworking/trafficControllers/securityPolicies@2025-01-01"
+#   name = "securityPolicy"
+#   parent_id = azapi_resource.trafficController.id
+#   location = azurerm_resource_group.resource_group.location
+  
+#   body = {
+#     properties = {
+#       wafPolicy = {
+#         id = azurerm_web_application_firewall_policy.waf_policy_msr.id
+#       }
+#     }
+#   }
+# }
+
 # resource "azapi_resource" "symbolicname" {
 #   schema_validation_enabled = false
 #   type = "Microsoft.ServiceNetworking/trafficControllers/associations@2023-11-01"
